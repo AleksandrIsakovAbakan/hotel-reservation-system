@@ -33,7 +33,7 @@ public class HotelController {
 
     @PutMapping("/{id}")
     public HotelRs editHotel(@PathVariable Long id,
-                             @Validated @RequestBody(required = false)HotelRq hotelRq)
+                             @Validated @RequestBody(required = false) HotelRq hotelRq)
     {
         return hotelService.putIdHotel(id, hotelRq);
     }

@@ -53,3 +53,23 @@ Q.idea/sonarlint/securityhotspotstore/8/e/8ec9a00bfd09b3190ac6b22251dbb1aa95a057
 :
 
 .gitignore,a/5/a5cc2925ca8258af241be7e5b0381edf30266302
+q
+Asrc/main/java/com/example/hotelreservationsystem/entity/Room.java,d/a/da003f1b179b414bde0f739984e43d893b0630fa
+|
+Lsrc/main/java/com/example/hotelreservationsystem/entity/UnavalableDates.java,9/d/9d0fb1850a60715c08a26ec29f979f6987459b29
+}
+Msrc/main/java/com/example/hotelreservationsystem/entity/UnavailableDates.java,3/5/354e91974720c46ff0d74a1ecd508b1e5189e8d8
+
+Osrc/main/java/com/example/hotelreservationsystem/repository/RoomRepository.java,9/0/90d171a98f13da289d979e829ed25605539281d9
+‹
+[src/main/java/com/example/hotelreservationsystem/repository/UnavailableDatesRepository.java,3/7/3721d5c58f43a426d59b3712ee6557fa5185f9f9
+y
+Isrc/main/java/com/example/hotelreservationsystem/service/RoomService.java,3/e/3ea9ca654be588039a569546ea22cf659f3b60c4
+€
+Psrc/main/java/com/example/hotelreservationsystem/controllers/RoomController.java,9/9/99623a54ec567079d245aa3af66dcf84464a578b
+|
+Lsrc/main/java/com/example/hotelreservationsystem/api/v1/response/RoomRs.java,8/3/839d3bfbe5b7d78a1fae33fd2f6c38e1989af1eb
+{
+Ksrc/main/java/com/example/hotelreservationsystem/api/v1/request/RoomRq.java,a/e/aedc2f92806dbc5a8d7a3e76cd6d4d955e94fc07
+x
+Hsrc/main/java/com/example/hotelreservationsystem/mappers/RoomMapper.java,c/f/cfca00e503e7f32a2c518bcdd05e4e43c0e02be9
