@@ -72,6 +72,13 @@ public class ExceptionHandlerAdvice {
         return ResponseEntity.internalServerError().body(makeErrors("Exception", exception));
     }
 
+    @ExceptionHandler(AlreadySuchNameException.class)
+    public ResponseEntity<ErrorRs> handleAlreadySuchNameException(
+            AlreadySuchNameException ex) {
+        log.info("AlreadySuchNameException " + ex);
+        return ResponseEntity.badRequest().body(makeErrors("AlreadySuchNameException", ex));
+    }
+
     private ErrorRs makeErrors(String error, Exception e){
 
         ErrorRs errorRs = new ErrorRs();
