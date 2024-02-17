@@ -31,4 +31,6 @@ public class Hotel {
 
     @Column(name = "number_ratings")
     private int numberRatings;
+
+
 }

@@ -1,5 +1,6 @@
 package com.example.hotelreservationsystem.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -21,6 +22,7 @@ public class Role {
     @JoinColumn(name = "username")
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
+    @JsonIgnore
     private User user;
 
     //public GrantedAuthority toAuthority(){

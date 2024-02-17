@@ -9,20 +9,30 @@ import java.time.LocalDate;
 
 @Entity
 @Data
-@Table(name = "unavailable_dates")
-public class UnavailableDates {
+@Table(name = "booking")
+public class Booking {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @JsonIgnore
     private long id;
 
+    @Column(name = "user_id")
+    private long userId;
+
     @Column(name = "room_id")
-    @JsonIgnore
     private long roomId;
 
-    @Column(name = "room_unavailable_data", columnDefinition = "DATE")
-    private LocalDate roomUnavailableData;
+    @Column(name = "arrival_date", columnDefinition = "DATE")
+    private LocalDate arrivalDate;
+
+    @Column(name = "date_of_departure", columnDefinition = "DATE")
+    private LocalDate dateOfDeparture;
+
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name="user_id", referencedColumnName = "id", insertable = false, updatable = false)
+    @ToString.Exclude
+    @JsonIgnore
+    private User user;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="room_id", referencedColumnName = "id", insertable = false, updatable = false)

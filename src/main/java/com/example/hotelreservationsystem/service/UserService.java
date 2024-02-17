@@ -125,4 +125,10 @@ public class UserService {
         Optional<User> byUsername = userRepository.findByUsernameAndEmail(username, email);
         return byUsername.isPresent();
     }
+
+    public void checkingIdUser(long userId) {
+
+        Optional<User> byId = userRepository.findById(userId);
+        if (byId.isEmpty()) throw new EntityNotFoundException("Not found userId: " + userId);
+    }
 }

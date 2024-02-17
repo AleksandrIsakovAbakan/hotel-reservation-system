@@ -15,6 +15,7 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.multipart.support.MissingServletRequestPartException;
 
 import java.net.BindException;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.NoSuchElementException;
 
@@ -24,7 +25,7 @@ public class ExceptionHandlerAdvice {
 
     @ExceptionHandler(EntityNotFoundException.class)
     public ResponseEntity<ErrorRs> handleEntityNotFoundException(EntityNotFoundException e) {
-        return ResponseEntity.notFound().build();
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(makeErrors("EntityNotFoundException", e));
     }
 
     @ExceptionHandler({BindException.class})
@@ -77,6 +78,11 @@ public class ExceptionHandlerAdvice {
             AlreadySuchNameException ex) {
         log.info("AlreadySuchNameException " + ex);
         return ResponseEntity.badRequest().body(makeErrors("AlreadySuchNameException", ex));
+    }
+
+    @ExceptionHandler(DuringSpecifiedPeriodRoomOccupiedException.class)
+    public ResponseEntity<ErrorRs> handleDuringSpecifiedPeriodRoomOccupiedException(DuringSpecifiedPeriodRoomOccupiedException e){
+        return ResponseEntity.badRequest().body(makeErrors("DuringSpecifiedPeriodRoomOccupiedException", e));
     }
 
     private ErrorRs makeErrors(String error, Exception e){

@@ -1,7 +1,9 @@
 package com.example.hotelreservationsystem.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.ToString;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +15,7 @@ public class Room {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @ToString.Exclude
     private long id;
 
     @Column(columnDefinition = "VARCHAR(255) NOT NULL")
@@ -34,4 +37,9 @@ public class Room {
 
     @OneToMany(mappedBy="room", fetch = FetchType.EAGER)
     private List<UnavailableDates> unavailableDatesList = new ArrayList<>();
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name="hotel_id", referencedColumnName = "id", insertable = false, updatable = false)
+    @ToString.Exclude
+    private Hotel hotel;
 }
