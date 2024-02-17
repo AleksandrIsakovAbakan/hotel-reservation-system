@@ -57,4 +57,11 @@ public class HotelController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
+    @GetMapping("/rating/{id}")
+    @PreAuthorize("hasAnyAuthority('ROLE_USER', 'ROLE_ADMIN')")
+    public ResponseEntity getRating(@PathVariable Long id,
+                                    @RequestParam Integer newMark){
+        hotelService.addRating(id, newMark);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }

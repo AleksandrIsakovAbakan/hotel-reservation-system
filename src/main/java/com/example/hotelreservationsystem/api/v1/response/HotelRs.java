@@ -18,7 +18,7 @@ public class HotelRs {
 
     private int distanceFromCityCenter;
 
-    private int rating;
+    private double rating;
 
     private int numberRatings;
 }

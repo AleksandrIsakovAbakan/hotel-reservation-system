@@ -82,4 +82,31 @@ public class HotelService {
         hotelRepository.deleteById(id);
         log.info("deleteHotel: " + id);
     }
+
+    public void addRating(Long id, Integer newMark) {
+
+        Optional<Hotel> byId = hotelRepository.findById(id);
+        if (byId.isEmpty()) throw new EntityNotFoundException("Hotel is not found id=" + id);
+
+        Hotel hotel = byId.get();
+        double totalRating = hotel.getRating() * hotel.getNumberRatings();
+
+        if (totalRating == 0D) {
+            totalRating = newMark;
+        } else {
+            totalRating = totalRating - hotel.getRating() + newMark;
+        }
+        double rating;
+        if (hotel.getNumberRatings() == 0){
+            rating = totalRating;
+        } else {
+            double round = Math.round((totalRating / hotel.getNumberRatings()) * 10);
+            rating = round / 10;
+        }
+
+        hotel.setNumberRatings(hotel.getNumberRatings() + 1);
+        hotel.setRating(rating);
+
+        hotelRepository.save(hotel);
+    }
 }

@@ -4,6 +4,7 @@ import com.example.hotelreservationsystem.api.v1.request.RoomRq;
 import com.example.hotelreservationsystem.api.v1.response.RoomRs;
 import com.example.hotelreservationsystem.entity.Room;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
 import java.util.List;
@@ -17,5 +18,6 @@ public interface RoomMapper {
 
     RoomRs toDTO(Room room);
 
+    @Mapping(target = "hotel", ignore = true)
     Room toModel(RoomRq roomRq);
 }
