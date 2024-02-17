@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 @Data
 @Entity
@@ -25,9 +27,9 @@ public class Role {
     @JsonIgnore
     private User user;
 
-    //public GrantedAuthority toAuthority(){
-    //    return new SimpleGrantedAuthority(authority.name());
-    //}
+    public GrantedAuthority toAuthority(){
+        return new SimpleGrantedAuthority(authority.name());
+    }
 
     public static Role from(RoleType type){
         var role = new Role();

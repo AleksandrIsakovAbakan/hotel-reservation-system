@@ -101,3 +101,11 @@ Lsrc/main/java/com/example/hotelreservationsystem/service/BookingService.java,c
 Ssrc/main/java/com/example/hotelreservationsystem/controllers/BookingController.java,5/a/5aff5920c97450a2abe965030ccca41710bebfa9
 ö
 jsrc/main/java/com/example/hotelreservationsystem/exception/DuringSpecifiedPeriodRoomOccupiedException.java,2/7/275255d89cdb7cb12a2b1a21b127da1910f5d4ed
+â
+Ysrc/main/java/com/example/hotelreservationsystem/configuration/SecurityConfiguration.java,0/b/0bd02384daf2e30b88cc8e54813447d3dec777bf
+Å
+Qsrc/main/java/com/example/hotelreservationsystem/configuration/SwaggerConfig.java,e/d/edc279174d1f3dc798d5add18548eacdee294fe4
+
+Osrc/main/java/com/example/hotelreservationsystem/security/AppUserPrincipal.java,b/5/b5dd70114dc327df883bae5cf7a538d4e5d03db4
+Ö
+Usrc/main/java/com/example/hotelreservationsystem/security/UserDetailsServiceImpl.java,6/9/690430e7e02c944080d3ce35b9f583acb7fa8b79

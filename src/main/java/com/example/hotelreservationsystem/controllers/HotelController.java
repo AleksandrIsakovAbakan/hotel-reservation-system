@@ -6,6 +6,7 @@ import com.example.hotelreservationsystem.service.HotelService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,6 +20,7 @@ public class HotelController {
     private final HotelService hotelService;
 
     @GetMapping
+    @PreAuthorize("hasAnyAuthority('ROLE_USER', 'ROLE_ADMIN')")
     public List<HotelRs> getPageHotel(@RequestParam(required = false) Integer offset,
                                      @RequestParam(required = false) Integer perPage)
     {
@@ -26,12 +28,14 @@ public class HotelController {
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasAnyAuthority('ROLE_USER', 'ROLE_ADMIN')")
     public HotelRs getHotelId(@PathVariable Long id)
     {
         return hotelService.getIdHotel(id);
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public HotelRs editHotel(@PathVariable Long id,
                              @Validated @RequestBody(required = false) HotelRq hotelRq)
     {
@@ -39,12 +43,14 @@ public class HotelController {
     }
 
     @PostMapping
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public HotelRs addHotel(@Validated @RequestBody HotelRq hotelRq)
     {
         return hotelService.addHotel(hotelRq);
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity deleteHotel(@PathVariable Long id)
     {
         hotelService.deleteHotel(id);

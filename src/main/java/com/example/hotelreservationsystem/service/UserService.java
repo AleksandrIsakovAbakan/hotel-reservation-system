@@ -10,6 +10,7 @@ import com.example.hotelreservationsystem.mappers.UserMapper;
 import com.example.hotelreservationsystem.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
@@ -23,11 +24,12 @@ public class UserService {
 
     private final UserRepository userRepository;
 
+    private final PasswordEncoder passwordEncoder;
 
-    public UserRs findByUsername(String username) {
+    public User findByUsername(String username) {
         log.info("getByUsername: " + username);
-        return UserMapper.INSTANCE.toDTO(userRepository.findByUsername(username)
-                .orElseThrow(() -> new EntityNotFoundException("Username not found! " + username)));
+        return userRepository.findByUsername(username)
+                .orElseThrow(() -> new EntityNotFoundException("Username not found! " + username));
     }
 
     public UserRs getIdUser(Long id) {
@@ -45,10 +47,10 @@ public class UserService {
 
     public UserRs putIdUser(Long id, UserRq userRq) {
 
-        User user = userRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("User not found!" + id));
+        User user = userRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("User not found: " + id));
 
             if (userRq.getUsername() != null) user.setUsername(userRq.getUsername());
-            if (userRq.getPassword() != null) user.setPassword(user.getPassword());
+            if (userRq.getPassword() != null) user.setPassword(passwordEncoder.encode(user.getPassword()));
 
             if (userRq.getRoleType() != null) {
                 List<Role> rolesOld = user.getRoles();
@@ -108,7 +110,7 @@ public class UserService {
     public User createNewAccount(User user, Role role) {
 
         user.setRoles(Collections.singletonList(role));
-        user.setPassword(user.getPassword());
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         role.setUser(user);
 
         return userRepository.saveAndFlush(user);

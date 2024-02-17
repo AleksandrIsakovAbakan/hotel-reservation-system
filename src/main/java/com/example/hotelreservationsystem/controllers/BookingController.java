@@ -4,6 +4,7 @@ import com.example.hotelreservationsystem.api.v1.request.BookingRq;
 import com.example.hotelreservationsystem.api.v1.response.BookingRs;
 import com.example.hotelreservationsystem.service.BookingService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,6 +18,7 @@ public class BookingController {
     private final BookingService bookingService;
 
     @GetMapping
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public List<BookingRs> getPageBooking(@RequestParam(required = false) Integer offset,
                                         @RequestParam(required = false) Integer perPage)
     {
@@ -24,6 +26,7 @@ public class BookingController {
     }
 
     @PostMapping
+    @PreAuthorize("hasAnyAuthority('ROLE_USER', 'ROLE_ADMIN')")
     public BookingRs addBooking(@Validated @RequestBody BookingRq bookingRq)
     {
         return bookingService.addBooking(bookingRq);

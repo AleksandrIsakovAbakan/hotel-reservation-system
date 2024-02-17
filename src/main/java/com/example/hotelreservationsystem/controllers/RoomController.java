@@ -6,6 +6,7 @@ import com.example.hotelreservationsystem.service.RoomService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,12 +18,14 @@ public class RoomController {
     private final RoomService roomService;
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasAnyAuthority('ROLE_USER', 'ROLE_ADMIN')")
     public RoomRs getRoomId(@PathVariable Long id)
     {
         return roomService.getIdRoom(id);
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public RoomRs editRoomId(@PathVariable Long id,
                              @Validated @RequestBody(required = false) RoomRq roomRq)
     {
@@ -30,12 +33,14 @@ public class RoomController {
     }
 
     @PostMapping
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public RoomRs addRoom(@Validated @RequestBody RoomRq roomRq)
     {
         return roomService.addRoom(roomRq);
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity deleteRoom(@PathVariable Long id)
     {
         roomService.deleteRoom(id);
