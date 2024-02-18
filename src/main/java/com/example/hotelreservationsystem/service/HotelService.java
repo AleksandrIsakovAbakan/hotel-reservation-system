@@ -5,7 +5,9 @@ import com.example.hotelreservationsystem.api.v1.response.HotelRs;
 import com.example.hotelreservationsystem.entity.Hotel;
 import com.example.hotelreservationsystem.exception.EntityNotFoundException;
 import com.example.hotelreservationsystem.mappers.HotelMapper;
+import com.example.hotelreservationsystem.model.HotelFilter;
 import com.example.hotelreservationsystem.repository.HotelRepository;
+import com.example.hotelreservationsystem.repository.HotelSpecification;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -108,5 +110,21 @@ public class HotelService {
         hotel.setRating(rating);
 
         hotelRepository.save(hotel);
+    }
+
+    public List<HotelRs> filterByHotels(HotelFilter hotelFilter) {
+
+        if (hotelFilter.getOffset() == null) hotelFilter.setOffset(0);
+        if (hotelFilter.getPerPage() == null) hotelFilter.setPerPage(10);
+
+        List<Hotel> content = hotelRepository.findAll(HotelSpecification.withFilter(hotelFilter),
+                PageRequest.of(hotelFilter.getOffset(), hotelFilter.getPerPage())).getContent();
+        if (content.isEmpty()) {
+            log.info("getAllNews: " + hotelFilter);
+            return HotelMapper.INSTANCE.toDTO(new ArrayList<>());
+        } else {
+            log.info("getAllNews: " + hotelFilter);
+            return HotelMapper.INSTANCE.toDTO(content);
+        }
     }
 }

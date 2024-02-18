@@ -2,6 +2,7 @@ package com.example.hotelreservationsystem.controllers;
 
 import com.example.hotelreservationsystem.api.v1.request.HotelRq;
 import com.example.hotelreservationsystem.api.v1.response.HotelRs;
+import com.example.hotelreservationsystem.model.HotelFilter;
 import com.example.hotelreservationsystem.service.HotelService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -63,5 +64,19 @@ public class HotelController {
                                     @RequestParam Integer newMark){
         hotelService.addRating(id, newMark);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping("/search")
+    @PreAuthorize("hasAnyAuthority('ROLE_USER', 'ROLE_ADMIN')")
+    public ResponseEntity<List<HotelRs>> getPageHotels(@RequestParam(required = false) Long hotelId,
+                                                      @RequestParam(required = false) String nameHotel,
+                                                      @RequestParam(required = false) String headLine,
+                                                      @RequestParam(required = false) String city,
+                                                      @RequestParam(required = false) String address,
+                                                      @RequestParam(required = false) Integer distanceFromCityCenter,
+                                                      @RequestParam(required = false) Integer offset,
+                                                      @RequestParam(required = false) Integer perPage) {
+        return new ResponseEntity<>(hotelService.filterByHotels(new HotelFilter(hotelId, nameHotel, headLine,
+                city, address, distanceFromCityCenter, offset, perPage)), HttpStatus.OK);
     }
 }

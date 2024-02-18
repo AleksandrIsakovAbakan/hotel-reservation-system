@@ -109,3 +109,11 @@ Qsrc/main/java/com/example/hotelreservationsystem/configuration/SwaggerConfig.ja
 Osrc/main/java/com/example/hotelreservationsystem/security/AppUserPrincipal.java,b/5/b5dd70114dc327df883bae5cf7a538d4e5d03db4
 …
 Usrc/main/java/com/example/hotelreservationsystem/security/UserDetailsServiceImpl.java,6/9/690430e7e02c944080d3ce35b9f583acb7fa8b79
+v
+Fsrc/main/java/com/example/hotelreservationsystem/model/NewsFilter.java,f/a/fa026841c52fb143c452fc55f9413525b8d22f7e
+w
+Gsrc/main/java/com/example/hotelreservationsystem/model/HotelFilter.java,b/f/bfab2080d99fa19a9fdae6dd2c260e23577af931
+‚
+Rsrc/main/java/com/example/hotelreservationsystem/repository/NewsSpecification.java,4/8/4814a73a22f00da165a6afc2516a0ae7d4c288b7
+ƒ
+Ssrc/main/java/com/example/hotelreservationsystem/repository/HotelSpecification.java,c/e/ce61ec3c12c50d4c3bdbb968500920040eb99517
