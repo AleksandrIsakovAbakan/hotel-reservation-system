@@ -3,16 +3,18 @@ package com.example.hotelreservationsystem.service;
 import com.example.hotelreservationsystem.api.v1.request.BookingRq;
 import com.example.hotelreservationsystem.api.v1.request.RoomRq;
 import com.example.hotelreservationsystem.api.v1.response.RoomRs;
+import com.example.hotelreservationsystem.entity.Hotel;
 import com.example.hotelreservationsystem.entity.Room;
 import com.example.hotelreservationsystem.entity.UnavailableDates;
 import com.example.hotelreservationsystem.exception.DuringSpecifiedPeriodRoomOccupiedException;
 import com.example.hotelreservationsystem.exception.EntityNotFoundException;
+import com.example.hotelreservationsystem.mappers.HotelMapper;
 import com.example.hotelreservationsystem.mappers.RoomMapper;
-import com.example.hotelreservationsystem.repository.BookingRepository;
-import com.example.hotelreservationsystem.repository.RoomRepository;
-import com.example.hotelreservationsystem.repository.UnavailableDatesRepository;
+import com.example.hotelreservationsystem.model.RoomFilter;
+import com.example.hotelreservationsystem.repository.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -129,5 +131,20 @@ public class RoomService {
 
         Optional<Room> byId = roomRepository.findById(roomId);
         if (byId.isEmpty()) throw new EntityNotFoundException("Not found roomId: " + roomId);
+    }
+
+    public List<RoomRs> filterByRooms(RoomFilter roomFilter) {
+
+        if (roomFilter.getOffset() == null) roomFilter.setOffset(0);
+        if (roomFilter.getPerPage() == null) roomFilter.setPerPage(10);
+
+        List<Room> content = roomRepository.findAll(RoomSpecification.withFilter(roomFilter),
+                PageRequest.of(roomFilter.getOffset(), roomFilter.getPerPage())).getContent();
+
+        if (content.isEmpty()) content = new ArrayList<>();
+        log.info("filterByRooms: " + roomFilter);
+
+        return RoomMapper.INSTANCE.toDTO(content);
+
     }
 }

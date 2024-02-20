@@ -68,10 +68,10 @@ public class ExceptionHandlerAdvice {
         return ResponseEntity.internalServerError().body(makeErrors("NoSuchElementException", e, false));
     }
 
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<ErrorRs> globalExceptionHandling(Exception exception, WebRequest request) {
-        return ResponseEntity.internalServerError().body(makeErrors("Exception", exception, true));
-    }
+//    @ExceptionHandler(Exception.class)
+//    public ResponseEntity<ErrorRs> globalExceptionHandling(Exception exception, WebRequest request) {
+//        return ResponseEntity.internalServerError().body(makeErrors("Exception", exception, true));
+//    }
 
     @ExceptionHandler(AlreadySuchNameException.class)
     public ResponseEntity<ErrorRs> handleAlreadySuchNameException(
