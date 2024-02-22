@@ -1,6 +1,5 @@
 package com.example.hotelreservationsystem.repository;
 
-import com.example.hotelreservationsystem.entity.Hotel;
 import com.example.hotelreservationsystem.entity.Room;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;

@@ -10,7 +10,18 @@ spring:
       schema: hotel_schema
       connection-init-sql: CREATE SCHEMA IF NOT EXISTS hotel_schema
       connection-timeout: 10000
+  kafka:
+    bootstrap-servers: kafka:9092
+  data:
+    mongodb:
+      uri: mongodb://root:root@mongodb:27017/statistics-database?authSource=admin
 
-#logging:
-#  level:
-#    ROOT: DEBUG
+app:
+  kafka:
+    kafkaMessageTopic: statistics-topic
+    kafkaMessageGroupId: statistics-event-group-id
+
+
+  #logging:
+  #  level:
+  #    ROOT: DEBUG

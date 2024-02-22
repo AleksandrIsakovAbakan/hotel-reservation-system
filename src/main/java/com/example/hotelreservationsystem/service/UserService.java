@@ -7,9 +7,12 @@ import com.example.hotelreservationsystem.entity.User;
 import com.example.hotelreservationsystem.exception.AlreadySuchNameException;
 import com.example.hotelreservationsystem.exception.EntityNotFoundException;
 import com.example.hotelreservationsystem.mappers.UserMapper;
+import com.example.hotelreservationsystem.model.StatisticsEvent;
 import com.example.hotelreservationsystem.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +28,11 @@ public class UserService {
     private final UserRepository userRepository;
 
     private final PasswordEncoder passwordEncoder;
+
+    private final KafkaTemplate<String, StatisticsEvent> kafkaTemplate;
+
+    @Value("${app.kafka.kafkaMessageTopic}")
+    private String topicName;
 
     public User findByUsername(String username) {
         log.info("getByUsername: " + username);
@@ -97,6 +105,8 @@ public class UserService {
         user.setEmail(userRq.getEmail());
         var createUser = createNewAccount(user, Role.from(userRq.getRoleType()));
 
+        sendMessage(createUser);
+
         return UserRs.builder()
                 .id(createUser.getId())
                 .username(createUser.getUsername())
@@ -132,5 +142,13 @@ public class UserService {
 
         Optional<User> byId = userRepository.findById(userId);
         if (byId.isEmpty()) throw new EntityNotFoundException("Not found userId: " + userId);
+    }
+
+    public void sendMessage(User user){
+        StatisticsEvent statisticsEvent = new StatisticsEvent();
+        statisticsEvent.setTypeEvent("addUser");
+        statisticsEvent.setUserId(user.getId());
+        log.info("StatisticsEvent addUser " + statisticsEvent);
+        kafkaTemplate.send(topicName, statisticsEvent);
     }
 }

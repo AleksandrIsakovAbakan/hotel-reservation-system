@@ -4,12 +4,15 @@ import com.example.hotelreservationsystem.api.v1.request.BookingRq;
 import com.example.hotelreservationsystem.api.v1.response.BookingRs;
 import com.example.hotelreservationsystem.entity.Booking;
 import com.example.hotelreservationsystem.mappers.BookingMapper;
+import com.example.hotelreservationsystem.model.StatisticsEvent;
 import com.example.hotelreservationsystem.repository.BookingRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -25,6 +28,11 @@ public class BookingService {
     private final RoomService roomService;
 
     private final UserService userService;
+
+    private final KafkaTemplate<String, StatisticsEvent> kafkaTemplate;
+
+    @Value("${app.kafka.kafkaMessageTopic}")
+    private String topicName;
 
     public List<BookingRs> getAllBookings(Integer offset, Integer perPage) {
 
@@ -52,8 +60,20 @@ public class BookingService {
         Booking save = bookingRepository.save(booking);
         log.info("addBooking: " + bookingRq);
 
+        sendMessage(save);
+
         roomService.saveDates(bookingRq);
 
         return BookingMapper.INSTANCE.toDTO(save);
+    }
+
+    public void sendMessage(Booking booking){
+        StatisticsEvent statisticsEvent = new StatisticsEvent();
+        statisticsEvent.setTypeEvent("addBooking");
+        statisticsEvent.setUserId(booking.getUserId());
+        statisticsEvent.setArrivalDate(booking.getArrivalDate());
+        statisticsEvent.setDateOfDeparture(booking.getDateOfDeparture());
+        log.info("StatisticsEvent addBooking " + statisticsEvent);
+        kafkaTemplate.send(topicName, statisticsEvent);
     }
 }

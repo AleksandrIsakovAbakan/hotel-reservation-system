@@ -1,9 +1,7 @@
 package com.example.hotelreservationsystem.controllers;
 
 import com.example.hotelreservationsystem.api.v1.request.RoomRq;
-import com.example.hotelreservationsystem.api.v1.response.HotelRs;
 import com.example.hotelreservationsystem.api.v1.response.RoomRs;
-import com.example.hotelreservationsystem.model.HotelFilter;
 import com.example.hotelreservationsystem.model.RoomFilter;
 import com.example.hotelreservationsystem.service.RoomService;
 import lombok.RequiredArgsConstructor;

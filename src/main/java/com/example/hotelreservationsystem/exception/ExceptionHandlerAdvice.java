@@ -15,8 +15,6 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.multipart.support.MissingServletRequestPartException;
 
 import java.net.BindException;
-import java.time.LocalDate;
-import java.util.Date;
 import java.util.NoSuchElementException;
 
 @RestControllerAdvice
@@ -68,10 +66,10 @@ public class ExceptionHandlerAdvice {
         return ResponseEntity.internalServerError().body(makeErrors("NoSuchElementException", e, false));
     }
 
-//    @ExceptionHandler(Exception.class)
-//    public ResponseEntity<ErrorRs> globalExceptionHandling(Exception exception, WebRequest request) {
-//        return ResponseEntity.internalServerError().body(makeErrors("Exception", exception, true));
-//    }
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<ErrorRs> globalExceptionHandling(Exception exception, WebRequest request) {
+        return ResponseEntity.internalServerError().body(makeErrors("Exception", exception, true));
+    }
 
     @ExceptionHandler(AlreadySuchNameException.class)
     public ResponseEntity<ErrorRs> handleAlreadySuchNameException(
